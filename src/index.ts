@@ -1,5 +1,4 @@
 import express from "express";
-import http from "http";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import compression from "compression";
@@ -12,13 +11,15 @@ import { Response } from "express";
 import authRouter from "./routes/auth.route.js";
 import userRouter from "./routes/user.route.js";
 
-dotenv.config(); // Load environment variables from .env file
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cors());
 app.use(compression());
-app.use(bodyParser.json());
+app.use(cookieParser());
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
 
